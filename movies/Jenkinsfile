@@ -116,7 +116,7 @@ pipeline {
                     openshift.withCluster() {
                     // TODO: Tag the ${APP_NAME}:latest image stream in the dev env as ${APP_NAME}:stage in staging
                       openshift.withProject(env.DEV_PROJECT) {
-                        openshift.tag("$APP_NAME:latest","$STAGE_PROJECT/$APP_NAME:staging")
+                        openshift.tag("$APP_NAME:latest","$STAGE_PROJECT/$APP_NAME:stage")
                       }
                     }
                 }
@@ -137,7 +137,7 @@ pipeline {
                 script {
                   openshift.withCluster() {
                     openshift.withProject(env.STAGE_PROJECT) {
-                      openshift.newApp("$APP_NAME:staging","--as-deployment-config")
+                      openshift.newApp("$APP_NAME:stage","--as-deployment-config")
                       openshift.expose("svc","$APP_NAME")
                     }
                   }
